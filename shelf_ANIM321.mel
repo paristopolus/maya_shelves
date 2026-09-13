@@ -772,5 +772,40 @@ global proc shelf_ANIM321 () {
         -commandRepeatable 1
         -flat 1
     ;
+    shelfButton
+        -enableCommandRepeat 1
+        -flexibleWidthType 3
+        -flexibleWidthValue 32
+        -enable 1
+        -width 35
+        -height 34
+        -manage 1
+        -visible 1
+        -preventOverride 0
+        -annotation "Apply color to selected curves" 
+        -enableBackground 0
+        -backgroundColor 0 0 0 
+        -highlightColor 0.321569 0.521569 0.65098 
+        -align "center" 
+        -label "Color CC" 
+        -labelOffset 0
+        -rotation 0
+        -flipX 0
+        -flipY 0
+        -useAlpha 1
+        -font "plainLabelFont" 
+        -imageOverlayLabel "CV RGB" 
+        -overlayLabelColor 0.8 0.8 0.8 
+        -overlayLabelBackColor 0 0 0 0.5 
+        -image "colorPresetSpectrum.png" 
+        -image1 "colorPresetSpectrum.png" 
+        -style "iconOnly" 
+        -marginWidth 0
+        -marginHeight 1
+        -command "# Maya Curve Override Color Tool\n# Compatible with Maya Python\n\nimport maya.cmds as cmds\n\nWINDOW_NAME = \"curveColorTool\"\n\n\n# ---------------------------------------------------\n# Utility Functions\n# ---------------------------------------------------\n\ndef get_selected_curve_shapes():\n    \"\"\"\n    Returns all nurbsCurve shapes under the current selection.\n    \"\"\"\n    shapes = []\n\n    selection = cmds.ls(selection=True, long=True)\n\n    for obj in selection:\n\n        if cmds.nodeType(obj) == \"nurbsCurve\":\n            shapes.append(obj)\n            continue\n\n        curve_shapes = cmds.listRelatives(\n            obj,\n            shapes=True,\n            fullPath=True,\n            type=\"nurbsCurve\"\n        ) or []\n\n        shapes.extend(curve_shapes)\n\n    return shapes\n\n\ndef apply_index_color(index):\n    \"\"\"\n    Applies Maya index colors.\n    \"\"\"\n    shapes = get_selected_curve_shapes()\n\n    if not shapes:\n        cmds.warning(\"Please select one or more curve controls.\")\n        return\n\n    for shape in shapes:\n        cmds.setAttr(shape + \".overrideEnabled\", 1)\n        cmds.setAttr(shape + \".overrideRGBColors\", 0)\n        cmds.setAttr(shape + \".overrideColor\", index)\n\n    print(\"Applied color index:\", index)\n\n\ndef apply_rgb_color(*args):\n    \"\"\"\n    Opens Maya color picker and applies RGB color.\n    \"\"\"\n    shapes = get_selected_curve_shapes()\n\n    if not shapes:\n        cmds.warning(\"Please select one or more curve controls.\")\n        return\n\n    result = cmds.colorEditor()\n\n    if not cmds.colorEditor(query=True, result=True):\n        return\n\n    rgb = cmds.colorEditor(query=True, rgb=True)\n\n    for shape in shapes:\n        cmds.setAttr(shape + \".overrideEnabled\", 1)\n        cmds.setAttr(shape + \".overrideRGBColors\", 1)\n\n        cmds.setAttr(shape + \".overrideColorRGB\",\n                     rgb[0], rgb[1], rgb[2],\n                     type=\"double3\")\n\n    print(\"Applied RGB color:\", rgb)\n\n\ndef apply_dropdown_color(*args):\n\n    color_name = cmds.optionMenu(\"colorMenu\", q=True, value=True)\n\n    maya_colors = {\n        \"Red\": 13,\n        \"Blue\": 6,\n        \"Yellow\": 17\n    }\n\n    apply_index_color(maya_colors[color_name])\n\n\n# ---------------------------------------------------\n# UI\n# ---------------------------------------------------\n\ndef create_ui():\n\n    if cmds.window(WINDOW_NAME, exists=True):\n        cmds.deleteUI(WINDOW_NAME)\n\n    cmds.window(\n        WINDOW_NAME,\n        title=\"Curve Color Tool\",\n        sizeable=False\n    )\n\n    cmds.columnLayout(adjustableColumn=True, rowSpacing=8)\n\n    cmds.text(\n        label=\"Select curve controls before applying colors.\",\n        align=\"left\"\n    )\n\n    cmds.separator(height=10)\n\n    cmds.text(label=\"Standard Colors\")\n\n    cmds.optionMenu(\"colorMenu\")\n    cmds.menuItem(label=\"Red\")\n    cmds.menuItem(label=\"Blue\")\n    cmds.menuItem(label=\"Yellow\")\n\n    cmds.button(\n        label=\"Apply Standard Color\",\n        command=apply_dropdown_color\n    )\n\n    cmds.separator(height=15)\n\n    cmds.button(\n        label=\"Pick Custom RGB Color\",\n        command=apply_rgb_color,\n        bgc=(0.3, 0.3, 0.3)\n    )\n\n    cmds.separator(height=10)\n\n    cmds.showWindow(WINDOW_NAME)\n\n\ncreate_ui()" 
+        -sourceType "python" 
+        -commandRepeatable 1
+        -flat 1
+    ;
 
 } 
