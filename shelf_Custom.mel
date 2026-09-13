@@ -224,6 +224,111 @@ global proc shelf_Custom () {
         -manage 1
         -visible 1
         -preventOverride 0
+        -annotation "Match the transforms of selected objects to the last-selected object." 
+        -enableBackground 0
+        -backgroundColor 0 0 0 
+        -highlightColor 0.321569 0.521569 0.65098 
+        -align "center" 
+        -label "Match All Transforms" 
+        -labelOffset 0
+        -rotation 0
+        -flipX 0
+        -flipY 0
+        -useAlpha 1
+        -font "plainLabelFont" 
+        -imageOverlayLabel "MAT" 
+        -overlayLabelColor 0.8 0.8 0.8 
+        -overlayLabelBackColor 0 0 0 0.5 
+        -image "menuIconModify.png" 
+        -image1 "menuIconModify.png" 
+        -style "iconOnly" 
+        -marginWidth 0
+        -marginHeight 1
+        -command "MatchTransform" 
+        -sourceType "mel" 
+        -commandRepeatable 1
+        -flat 1
+    ;
+    shelfButton
+        -enableCommandRepeat 1
+        -flexibleWidthType 3
+        -flexibleWidthValue 32
+        -enable 1
+        -width 35
+        -height 34
+        -manage 1
+        -visible 1
+        -preventOverride 0
+        -annotation "Match the pivot positions of the selected objects to the last-selected object's pivot." 
+        -enableBackground 0
+        -backgroundColor 0 0 0 
+        -highlightColor 0.321569 0.521569 0.65098 
+        -align "center" 
+        -label "Match Pivots" 
+        -labelOffset 0
+        -rotation 0
+        -flipX 0
+        -flipY 0
+        -useAlpha 1
+        -font "plainLabelFont" 
+        -imageOverlayLabel "MP" 
+        -overlayLabelColor 0.8 0.8 0.8 
+        -overlayLabelBackColor 0 0 0 0.5 
+        -image "menuIconModify.png" 
+        -image1 "menuIconModify.png" 
+        -style "iconOnly" 
+        -marginWidth 0
+        -marginHeight 1
+        -command "MatchPivots" 
+        -sourceType "mel" 
+        -commandRepeatable 1
+        -flat 1
+    ;
+    shelfButton
+        -enableCommandRepeat 1
+        -flexibleWidthType 3
+        -flexibleWidthValue 32
+        -enable 1
+        -width 35
+        -height 34
+        -manage 1
+        -visible 1
+        -preventOverride 0
+        -annotation "Reset transformation options" 
+        -enableBackground 0
+        -backgroundColor 0 0 0 
+        -highlightColor 0.321569 0.521569 0.65098 
+        -align "center" 
+        -label "identityResetItemOption" 
+        -labelOffset 0
+        -rotation 0
+        -flipX 0
+        -flipY 0
+        -useAlpha 1
+        -font "plainLabelFont" 
+        -imageOverlayLabel "Rto" 
+        -overlayLabelColor 0.8 0.8 0.8 
+        -overlayLabelBackColor 0 0 0 0.5 
+        -image "menuIconModify.png" 
+        -image1 "menuIconModify.png" 
+        -style "iconOnly" 
+        -marginWidth 0
+        -marginHeight 1
+        -command "ResetTransformationsOptions" 
+        -sourceType "mel" 
+        -commandRepeatable 1
+        -flat 1
+    ;
+    shelfButton
+        -enableCommandRepeat 1
+        -flexibleWidthType 3
+        -flexibleWidthValue 32
+        -enable 1
+        -width 35
+        -height 34
+        -manage 1
+        -visible 1
+        -preventOverride 0
         -annotation "Open the Arnold RenderView window" 
         -enableBackground 0
         -backgroundColor 0 0 0 
@@ -629,6 +734,40 @@ global proc shelf_Custom () {
         -marginHeight 1
         -command "import maya.cmds as cmds\n# Make a selection set with a crypto_asset for each object\n\nobjs = cmds.ls(selection=True) # Get Selection\ncmds.select(clear=True)\nprefix = \"set_CryptoAsset_\"\nallSelSets = []\nasset = \"mtoa_constant_crypto_asset\"\nrefl = \"mtoa_constant_reflect_index\";\nrow = \"mtoa_constant_row\";\ncol = \"mtoa_constant_col\";\nassetPrefix = \"lyr\"\n\nfor i in range(len(objs)):\n    cmds.select(clear=True)\n    \n    obj = objs[i]\n    tag = i+1\n    serialize = (f'{tag:03}')\n    subSetName = prefix + serialize\n    assetTag = assetPrefix + serialize\n    \n    # select individual object; make selection set\n    cmds.select(obj)\n    subSet = cmds.sets(name=subSetName)\n    allSelSets.append(subSetName)\n    \n    # Add attributes for Crypto Asset\n    cmds.addAttr(subSet, ln=asset, dataType=\"string\")\n    objAttr = subSet + \".\" + asset\n    cmds.setAttr(objAttr, assetTag, type=\"string\")\n    \n    #Add attributes for Reflect Index\n    cmds.addAttr(subSet, ln=refl, keyable=True, at=\"float\")\n    objAttr = subSet + \".\" + refl\n    cmds.setAttr(objAttr, tag)\n\n\t#Add attributes for Row\n    cmds.addAttr(subSet, ln=row, keyable=True, at=\"float\")\n    objAttr = subSet + \".\" + row\n    cmds.setAttr(objAttr, 0)\n    \n    #Add attributes for Col\n    cmds.addAttr(subSet, ln=col, keyable=True, at=\"float\")\n    objAttr = subSet + \".\" + col\n    cmds.setAttr(objAttr, 0)\n    \n# Create a master selection set\nsetName = \"set_Crypto_Assets\"\nmasterSet = cmds.sets(allSelSets,name=setName)\ncmds.select(masterSet)" 
         -sourceType "python" 
+        -commandRepeatable 1
+        -flat 1
+    ;
+    shelfButton
+        -enableCommandRepeat 1
+        -flexibleWidthType 3
+        -flexibleWidthValue 32
+        -enable 1
+        -width 35
+        -height 34
+        -manage 1
+        -visible 1
+        -preventOverride 0
+        -annotation "cycleCheck -e off" 
+        -enableBackground 0
+        -backgroundColor 0 0 0 
+        -highlightColor 0.321569 0.521569 0.65098 
+        -align "center" 
+        -label "cycleCheck -e off" 
+        -labelOffset 0
+        -rotation 0
+        -flipX 0
+        -flipY 0
+        -useAlpha 1
+        -font "plainLabelFont" 
+        -overlayLabelColor 0.8 0.8 0.8 
+        -overlayLabelBackColor 0 0 0 0.5 
+        -image "commandButton.png" 
+        -image1 "commandButton.png" 
+        -style "iconOnly" 
+        -marginWidth 0
+        -marginHeight 1
+        -command "cycleCheck -e off" 
+        -sourceType "mel" 
         -commandRepeatable 1
         -flat 1
     ;
@@ -1091,7 +1230,7 @@ global proc shelf_Custom () {
         -flexibleWidthType 3
         -flexibleWidthValue 32
         -enable 1
-        -width 39
+        -width 35
         -height 34
         -manage 1
         -visible 1
@@ -1338,12 +1477,12 @@ global proc shelf_Custom () {
         -manage 1
         -visible 1
         -preventOverride 0
-        -annotation "Adds \"_geo\" suffix to children geometry" 
+        -annotation "Add \"_geo\"" 
         -enableBackground 0
         -backgroundColor 0 0 0 
         -highlightColor 0.321569 0.521569 0.65098 
         -align "center" 
-        -label "Adds \"_geo\" suffix to children geometry" 
+        -label "_geo" 
         -labelOffset 0
         -rotation 0
         -flipX 0
@@ -1355,40 +1494,6 @@ global proc shelf_Custom () {
         -overlayLabelBackColor 0 0 0 0.5 
         -image "rename.png" 
         -image1 "rename.png" 
-        -style "iconOnly" 
-        -marginWidth 0
-        -marginHeight 1
-        -command "# Adds a \"_geo\" to the end of each piece of geometry\n# Select the top parent node\nimport maya.cmds as cmds\n\nsel = cmds.ls(selection=True)\ncmds.select(clear=True)\nselectAgain = True # select the object again?\n\nsuffix = \"_geo\" \nobjs = cmds.listRelatives(sel,allDescendents=True,type=\"transform\",fullPath=True) # list children in reverse full path to object\nobjShort = cmds.listRelatives(sel,allDescendents=True,type=\"transform\") # list children in reverse short name     \n\nfor i in range(len(objs)):\n    obj = objs[i]\n    objSh = objShort[i] \n    containGrpName = (objSh.find('_grp')>0) # check if name contains \"grp\"\n    containGeoName = (objSh.find('_geo')>0) # check if name contains \"geo\"\n    if(not containGrpName):\n        if(not containGeoName):\n            newName = objSh + suffix \n            cmds.rename(obj, newName)\n            \n        # Match Shape and geo name\n        if(containGeoName):\n            shape = cmds.listRelatives(obj,allDescendents=True,fullPath=True) # get shape\n            cmds.rename(shape,(objSh + \"Shape\")) # rename shape to new geometry name\n        \nif(selectAgain):\n    cmds.select(sel)" 
-        -sourceType "python" 
-        -commandRepeatable 1
-        -flat 1
-    ;
-    shelfButton
-        -enableCommandRepeat 1
-        -flexibleWidthType 3
-        -flexibleWidthValue 32
-        -enable 1
-        -width 35
-        -height 34
-        -manage 1
-        -visible 1
-        -preventOverride 0
-        -annotation "import maya.cmds as cmds\nimport os\n\nsuffix = \"_geo\"\nsel = cmds.ls(selection=True)\ncmds.select(clear=True)\n\nfor i in range(len(sel)):\n    obj = sel[i]\n    newName = obj + suffix\n    cmds.rename(obj, newName)\n\ncmds.select((\"*\"+suffix))" 
-        -enableBackground 0
-        -backgroundColor 0 0 0 
-        -highlightColor 0.321569 0.521569 0.65098 
-        -align "center" 
-        -label "import maya.cmds as cmds\nimport os\n\nsuffix = \"_geo\"\nsel = cmds.l..." 
-        -labelOffset 0
-        -rotation 0
-        -flipX 0
-        -flipY 0
-        -useAlpha 1
-        -font "plainLabelFont" 
-        -overlayLabelColor 0.8 0.8 0.8 
-        -overlayLabelBackColor 0 0 0 0.5 
-        -image "pythonFamily.png" 
-        -image1 "pythonFamily.png" 
         -style "iconOnly" 
         -marginWidth 0
         -marginHeight 1
@@ -1743,6 +1848,146 @@ global proc shelf_Custom () {
         -marginHeight 1
         -command "## Publish file\n# Publish\nimport maya.cmds as cmds\nimport os\n\ndef export_publish_sets():\n    # Check that scene is saved\n    scene_path =  cmds.file(q=True, sn=True)\n    if not scene_path:\n        cmds.confirmDialog(message=\"Please save the scene before exporting.\", button=\"close\")\n        return\n        \n    working_dir  = os.path.dirname(scene_path)\n    publish_dir = working_dir.split( \"__working__\")[0]\n\n    scene_name_full = os.path.splitext(os.path.basename(scene_path))[0]\n    scene_ext = os.path.splitext(os.path.basename(scene_path))[1]\n    scene_name = scene_name_full[:-5] # remove the take serialization\n    \n    # Find all selection sets ending in \"_publish\"\n    publish_sets = [s for s in cmds.ls(type=\"objectSet\") if s.endswith(\"_publish\")]\n    if not publish_sets:\n        cmds.confirmDialog(message=\"No *_publish sets found in the scene.\", button=\"close\")\n        return\n        \n    # Export directory\n    export_dir = os.path.join(publish_dir, \"publish\")\n    if not os.path.exists(export_dir):\n        os.makedirs(export_dir)\n\n    for s in publish_sets:\n        members = cmds.sets(s, q=True)\n        if not members:\n            cmds.warning(\"Set '{}' is empty, skipping.\".format(s))\n            continue\n\n        export_path = os.path.join(export_dir, \"{}.mb\".format(scene_name))\n\n        try:\n            cmds.select(members, r=True)\n            cmds.file(\n                export_path,\n                force=True,\n                options=\"v=0;\",\n                typ=\"mayaBinary\",\n                pr=True,\n                es=True\n            )\n            print(\"Exported: {}\".format(export_path))\n        except Exception as e:\n            cmds.confirmDialog(\"Failed to export '{}': {}\".format(s, e), button=\"close\")\n            return\n    \n    cmds.select(clear=True)\n\n    # Version Up\n    scene_meta = scene_name.split(\"_\")\n    cur_ver = int(scene_meta[1].split(\"v\")[1]) # get version\n    new_ver = \"v\" + f\"{(cur_ver + 1):03d}\"\n    new_scene_name = scene_meta[0] + \"_\" + new_ver + \"_t001\"\n    new_full_path = working_dir + \"/\" + new_scene_name + scene_ext\n    cmds.file(rename=new_full_path)\n    cmds.file(save=True, force=True)\n\nexport_publish_sets()" 
         -sourceType "python" 
+        -commandRepeatable 1
+        -flat 1
+    ;
+    shelfButton
+        -enableCommandRepeat 1
+        -flexibleWidthType 3
+        -flexibleWidthValue 32
+        -enable 1
+        -width 35
+        -height 34
+        -manage 1
+        -visible 1
+        -preventOverride 0
+        -annotation "Retarget Textures to a new directory" 
+        -enableBackground 0
+        -backgroundColor 0 0 0 
+        -highlightColor 0.321569 0.521569 0.65098 
+        -align "center" 
+        -label "Retarget Textures" 
+        -labelOffset 0
+        -rotation 0
+        -flipX 0
+        -flipY 0
+        -useAlpha 1
+        -font "plainLabelFont" 
+        -imageOverlayLabel "rtxt" 
+        -overlayLabelColor 0.8 0.8 0.8 
+        -overlayLabelBackColor 0 0 0 1 
+        -image "textureEditorCheckered.png" 
+        -image1 "textureEditorCheckered.png" 
+        -style "iconOnly" 
+        -marginWidth 0
+        -marginHeight 1
+        -command "# Maya: Relink missing textures to a chosen directory\n# Works by finding unresolved file path attributes via filePathEditor, then setting them to matching files.\n\nimport os\nimport maya.cmds as cmds\n\ndef _norm(path):\n    \"\"\"Normalize for Maya: forward slashes + no trailing slashes (except root).\"\"\"\n    if not path:\n        return path\n    path = os.path.normpath(path).replace('\\\\', '/')\n    return path\n\ndef _build_filename_index(root_dir, recursive=True):\n    \"\"\"\n    Build a dict: lower(filename) -> fullpath\n    If duplicate filenames exist, keeps the first one found.\n    \"\"\"\n    index = {}\n    root_dir = _norm(root_dir)\n\n    if not os.path.isdir(root_dir):\n        return index\n\n    if recursive:\n        for base, _, files in os.walk(root_dir):\n            for f in files:\n                key = f.lower()\n                if key not in index:\n                    index[key] = _norm(os.path.join(base, f))\n    else:\n        for f in os.listdir(root_dir):\n            full = os.path.join(root_dir, f)\n            if os.path.isfile(full):\n                key = f.lower()\n                if key not in index:\n                    index[key] = _norm(full)\n    return index\n\ndef find_missing_texture_plugs():\n    \"\"\"\n    Returns a list of attribute plugs (e.g. 'file1.fileTextureName') that are unresolved.\n    Uses filePathEditor, which is designed to query and manipulate external file paths in bulk. [1](https://help.autodesk.com/cloudhelp/2022/ENU/Maya-Tech-Docs/CommandsPython/filePathEditor.html)[2](https://help.autodesk.com/cloudhelp/2025/ENU/Maya-Tech-Docs/Commands/filePathEditor.html)\n    \"\"\"\n    # Refresh + focus unresolved items\n    try:\n        cmds.filePathEditor(refresh=True)\n    except Exception:\n        pass\n\n    # 'unresolved' filters to missing/broken paths. [1](https://help.autodesk.com/cloudhelp/2022/ENU/Maya-Tech-Docs/CommandsPython/filePathEditor.html)[2](https://help.autodesk.com/cloudhelp/2025/ENU/Maya-Tech-Docs/Commands/filePathEditor.html)\n    try:\n        cmds.filePathEditor(unresolved=True, refresh=True)\n    except Exception:\n        # Some Maya versions may not allow unresolved flag with refresh; that's ok\n        pass\n\n    # listFiles returns file entries; attributeOnly returns the plug names. [1](https://help.autodesk.com/cloudhelp/2022/ENU/Maya-Tech-Docs/CommandsPython/filePathEditor.html)[3](https://qiita.com/aizwellenstan/items/064d058057648d89554c)\n    plugs = cmds.filePathEditor(q=True, listFiles=\"\", attributeOnly=True) or []\n\n    # Filter out plugs that aren't settable (or are references) if desired\n    missing = []\n    for plug in plugs:\n        try:\n            # If it's a reference node entry, the nodeType may be \"reference\" and needs different handling.\n            # We primarily want texture/image file plugs, so we keep only plugs that exist and are attributes.\n            if \".\" in plug and cmds.objExists(plug.split(\".\")[0]):\n                missing.append(plug)\n        except Exception:\n            continue\n\n    # De-dup preserving order\n    seen = set()\n    out = []\n    for p in missing:\n        if p not in seen:\n            seen.add(p)\n            out.append(p)\n    return out\n\ndef relink_missing_textures(search_dir=None, recursive=True, preview_only=False):\n    \"\"\"\n    - search_dir: directory to search for textures (if None, prompts user)\n    - recursive: search subdirectories\n    - preview_only: if True, prints what would change but does not setAttr\n    \"\"\"\n    # Ask for folder if not provided\n    if not search_dir:\n        # mode=4 is \"directory\" in Maya file dialog\n        selected = cmds.fileDialog2(dialogStyle=2, fileMode=3, caption=\"Choose texture directory to search\") or []\n        if not selected:\n            cmds.warning(\"No directory selected. Aborting.\")\n            return\n        search_dir = selected[0]\n\n    search_dir = _norm(search_dir)\n    if not os.path.isdir(search_dir):\n        cmds.warning(\"Directory does not exist: {}\".format(search_dir))\n        return\n\n    missing_plugs = find_missing_texture_plugs()\n    if not missing_plugs:\n        print(\"? No missing/unresolved texture paths found.\")\n        return\n\n    print(\"Found {} unresolved file path attributes.\".format(len(missing_plugs)))\n    print(\"Indexing files in: {} (recursive={})\".format(search_dir, recursive))\n\n    filename_index = _build_filename_index(search_dir, recursive=recursive)\n\n    fixed = []\n    still_missing = []\n\n    for plug in missing_plugs:\n        try:\n            old_path = cmds.getAttr(plug)\n        except Exception:\n            # Some plugs may not be readable\n            still_missing.append((plug, None, None))\n            continue\n\n        if not old_path:\n            still_missing.append((plug, old_path, None))\n            continue\n\n        # Match by filename\n        fname = os.path.basename(old_path).lower()\n        new_path = filename_index.get(fname)\n\n        if new_path and os.path.isfile(new_path):\n            if preview_only:\n                print(\"[PREVIEW] {}: {} -> {}\".format(plug, old_path, new_path))\n            else:\n                try:\n                    cmds.setAttr(plug, new_path, type=\"string\")\n                    fixed.append((plug, old_path, new_path))\n                    print(\"? Fixed: {} -> {}\".format(plug, new_path))\n                except Exception as e:\n                    still_missing.append((plug, old_path, new_path))\n                    print(\"? Failed to set {} ({}): {}\".format(plug, new_path, e))\n        else:\n            still_missing.append((plug, old_path, None))\n            print(\"?? Not found for {} (looking for filename: {})\".format(plug, os.path.basename(old_path)))\n\n    print(\"\\n========== SUMMARY ==========\")\n    print(\"Fixed: {}\".format(len(fixed)))\n    print(\"Still missing / failed: {}\".format(len(still_missing)))\n\n    if still_missing:\n        print(\"\\n--- Unresolved entries ---\")\n        for plug, old_path, candidate in still_missing:\n            print(\" • {} | old: {} | candidate: {}\".format(plug, old_path, candidate))\n\n    return fixed, still_missing\n\n# Run it:\n# relink_missing_textures()  # prompts for directory\nrelink_missing_textures()" 
+        -sourceType "python" 
+        -commandRepeatable 1
+        -flat 1
+    ;
+    shelfButton
+        -enableCommandRepeat 1
+        -flexibleWidthType 3
+        -flexibleWidthValue 32
+        -enable 1
+        -width 35
+        -height 34
+        -manage 1
+        -visible 1
+        -preventOverride 0
+        -annotation "Set Rigging Colors" 
+        -enableBackground 0
+        -backgroundColor 0 0 0 
+        -highlightColor 0.321569 0.521569 0.65098 
+        -align "center" 
+        -label "rigging colors" 
+        -labelOffset 0
+        -rotation 0
+        -flipX 0
+        -flipY 0
+        -useAlpha 1
+        -font "plainLabelFont" 
+        -imageOverlayLabel "colors" 
+        -overlayLabelColor 0.8 0.8 0.8 
+        -overlayLabelBackColor 0 0 0 0.5 
+        -image "colorPresetSpectrum.png" 
+        -image1 "colorPresetSpectrum.png" 
+        -style "iconOnly" 
+        -marginWidth 0
+        -marginHeight 1
+        -command "\n# Maya 2026 - Curve Shape Drawing Override Color (Red/Blue/Yellow)\nimport maya.cmds as cmds\n\ndef set_curve_override_color_from_prompt():\n    # Prompt user for a color choice\n    choice = cmds.confirmDialog(\n        title=\"Curve Override Color\",\n        message=\"Choose an override color for selected curve shapes:\",\n        button=[\"Red\", \"Blue\", \"Yellow\", \"Cancel\"],\n        defaultButton=\"Red\",\n        cancelButton=\"Cancel\",\n        dismissString=\"Cancel\"\n    )  # confirmDialog returns the label of the pressed button [3](https://help.autodesk.com/cloudhelp/2026/ENU/Maya-Tech-Docs/CommandsPython/confirmDialog.html)\n\n    if choice == \"Cancel\":\n        return\n\n    # Maya's indexed override colors commonly used for curve controls:\n    # Red=13, Blue=6, Yellow=17 [1](https://forums.autodesk.com/t5/maya-programming-forum/change-colour-of-curve-objects/td-p/9766686)[2](http://davy.chang.free.fr/index.php/maya/melscript/melscript-change-color-index-on-selected-objects/)\n    color_index_map = {\n        \"Red\": 13,\n        \"Blue\": 6,\n        \"Yellow\": 17\n    }\n    color_index = color_index_map[choice]\n\n    sel = cmds.ls(selection=True, long=True) or []\n    if not sel:\n        cmds.warning(\"Nothing selected. Please select one or more curve transforms/shapes.\")\n        return\n\n    # Collect nurbsCurve shapes from the selection:\n    curve_shapes = []\n\n    for node in sel:\n        ntype = cmds.nodeType(node)\n\n        # If user directly selected a shape:\n        if ntype == \"nurbsCurve\":\n            curve_shapes.append(node)\n            continue\n\n        # If user selected a transform (or something else), search its shapes:\n        shapes = cmds.listRelatives(node, shapes=True, fullPath=True) or []\n        for s in shapes:\n            if cmds.nodeType(s) == \"nurbsCurve\":\n                curve_shapes.append(s)\n\n    # De-duplicate while preserving order\n    seen = set()\n    curve_shapes = [s for s in curve_shapes if not (s in seen or seen.add(s))]\n\n    if not curve_shapes:\n        cmds.warning(\"No nurbsCurve shapes found in selection.\")\n        return\n\n    # Apply drawing override on each curve shape\n    for shape in curve_shapes:\n        try:\n            cmds.setAttr(shape + \".overrideEnabled\", 1)\n            cmds.setAttr(shape + \".overrideRGBColors\", 0)  # ensure indexed mode\n            cmds.setAttr(shape + \".overrideColor\", color_index)\n        except Exception as e:\n            cmds.warning(\"Failed on {}: {}\".format(shape, e))\n\n    cmds.inViewMessage(\n        amg=\"Applied <hl>{}</hl> override to <hl>{}</hl> curve shape(s).\".format(choice, len(curve_shapes)),\n        pos=\"topCenter\",\n        fade=True\n    )\n\n# Run it\nset_curve_override_color_from_prompt()\n" 
+        -sourceType "python" 
+        -commandRepeatable 1
+        -flat 1
+    ;
+    shelfButton
+        -enableCommandRepeat 1
+        -flexibleWidthType 3
+        -flexibleWidthValue 32
+        -enable 1
+        -width 35
+        -height 34
+        -manage 1
+        -visible 1
+        -preventOverride 0
+        -annotation "cycleCheck -e off" 
+        -enableBackground 0
+        -backgroundColor 0 0 0 
+        -highlightColor 0.321569 0.521569 0.65098 
+        -align "center" 
+        -label "cycleCheck -e off" 
+        -labelOffset 0
+        -rotation 0
+        -flipX 0
+        -flipY 0
+        -useAlpha 1
+        -font "plainLabelFont" 
+        -imageOverlayLabel "cycle" 
+        -overlayLabelColor 0.8 0.8 0.8 
+        -overlayLabelBackColor 0 0 0 0.5 
+        -image "noAccess.png" 
+        -image1 "noAccess.png" 
+        -style "iconOnly" 
+        -marginWidth 0
+        -marginHeight 1
+        -command "cycleCheck -e off" 
+        -sourceType "mel" 
+        -commandRepeatable 1
+        -flat 1
+    ;
+    shelfButton
+        -enableCommandRepeat 1
+        -flexibleWidthType 3
+        -flexibleWidthValue 32
+        -enable 1
+        -width 35
+        -height 34
+        -manage 1
+        -visible 1
+        -preventOverride 0
+        -annotation "Python Command Reference" 
+        -enableBackground 0
+        -backgroundColor 0 0 0 
+        -highlightColor 0.321569 0.521569 0.65098 
+        -align "center" 
+        -label "Python Command Reference" 
+        -labelOffset 0
+        -rotation 0
+        -flipX 0
+        -flipY 0
+        -useAlpha 1
+        -font "plainLabelFont" 
+        -imageOverlayLabel "PCR" 
+        -overlayLabelColor 0.8 0.8 0.8 
+        -overlayLabelBackColor 0 0 0 0.5 
+        -image "menuIconHelp.png" 
+        -image1 "menuIconHelp.png" 
+        -style "iconOnly" 
+        -marginWidth 0
+        -marginHeight 1
+        -command "OpenPyCmdRef" 
+        -sourceType "mel" 
         -commandRepeatable 1
         -flat 1
     ;
